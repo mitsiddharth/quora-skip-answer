@@ -13,7 +13,6 @@
 	$(document).ready(function() {
 		if(isAnswerPage()){
 			initialize();
-			activate_mouseover_events();
 		}
 		return;
 	});
@@ -23,17 +22,22 @@
     	return ansHashIndex[ansHashTags[currentUrl] + 1];
 	};
 
+  var mouseOverHandler = function(e, left_coord) {
+    var top_coord = e.pageY;
+    var nextUrl = '#' + getTargetUrl(e.srcElement);
+    var skipButton = createSkipButton(left_coord - 50, top_coord, nextUrl);
+    skipButton.appendTo(document.body);
+  };
+
  	var activate_mouseover_events = function() {
     	var answer_elements = $(answer_text_selector);
-    	left_coord = answer_elements.offset().left;
+    	var left_coord = answer_elements.offset().left;
+
+      answer_elements.unbind('mouseover');
 
     	answer_elements.bind('mouseover', function(e) {
-      		top_coord = e.pageY;
-      		var nextUrl = '#' + getTargetUrl(e.srcElement);
-      		var skipButton = createSkipButton(left_coord - 50, top_coord, nextUrl);
-      		skipButton.appendTo(answer_elements[0]);
+        mouseOverHandler(e, left_coord);
     	});
-
   	};
 
 	var isAnswerPage = function () {
@@ -52,6 +56,7 @@
 		// Scan through all the answers
 		// and collect the hastags
 		populateAnswerHash();
+    registerEvents();
 	};
 	
 	var populateAnswerHash = function() {
@@ -63,16 +68,32 @@
 	
 	};
 
-  	var createSkipButton = function(x_coord, y_coord, nextUrl) {
-    	var skipButton = $('#skipButton');
-    	if (skipButton.length == 0) {
-      		skipButton = $('<div id="skipButton"><a href="#">SKIP</a></div>');
-      		skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'width':'50px', 'background-color':'#003333'});
-    	} else {
-      		skipButton.css({'left':x_coord, 'top':y_coord});
-    	}
-    	skipButton.find('a').attr('href', nextUrl);
-    	return skipButton;
-  	};
+  var createSkipButton = function(x_coord, y_coord, nextUrl) {
+    var skipButton = $('#skipButton');
+    if (skipButton.length == 0) {
+      skipButton = $('<div id="skipButton"><a href="#">SKIP</a></div>');
+      skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'width':'50px', 'background-color':'#003333'});
+    } else {
+      skipButton.css({'left':x_coord, 'top':y_coord});
+    }
+    skipButton.find('a').attr('href', nextUrl);
+    return skipButton;
+  };
+
+  var registerDomInsertEvent = function() {
+    $(document).bind('DOMNodeInserted', function(e) {
+      var element = e.target;
+      console.log(element);
+      if($(element).attr('class') == 'pagedlist_item') {
+        populateAnswerHash(); 
+        activate_mouseover_events();
+      }
+    });
+  };
+
+  var registerEvents = function() {
+    activate_mouseover_events();
+    registerDomInsertEvent();
+  }
 
 })(jQuery);
