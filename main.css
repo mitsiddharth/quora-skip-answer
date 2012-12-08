@@ -1,0 +1,25 @@
+@keyframes nodeInserted {  
+  from {  
+  clip: rect(1px, auto, auto, auto);  
+  }
+  to {  
+  clip: rect(0px, auto, auto, auto);
+}  
+}
+
+@-webkit-keyframes nodeInserted {  
+  from {  
+  clip: rect(1px, auto, auto, auto);  
+  }
+  to {  
+  clip: rect(0px, auto, auto, auto);
+}  
+}
+
+div.pagedlist_item {
+  animation-name: nodeInserted;
+  animation-duration: 0.001s;
+
+  -webkit-animation-name: nodeInserted;
+  -webkit-animation-duration: 0.001s;
+}
