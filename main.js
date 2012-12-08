@@ -71,8 +71,14 @@
   var createSkipButton = function(x_coord, y_coord, nextUrl) {
     var skipButton = $('#skipButton');
     if (skipButton.length == 0) {
-      skipButton = $('<div id="skipButton"><a href="#">SKIP</a></div>');
-      skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'width':'50px', 'background-color':'#003333'});
+      skipButton = $('<div id="skipButton" class="topic_list_item">' +
+                     '  <a href="#" class="topic_name">'+
+                     '    <span class="name_text">'+
+                     '      Skip'+
+                     '    </span>'+
+                     '  </a>'+
+                     '</div>');
+      skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute'});
     } else {
       skipButton.css({'left':x_coord, 'top':y_coord});
     }
