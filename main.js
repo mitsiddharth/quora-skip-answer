@@ -1,5 +1,4 @@
 (function ($) {
-	QSA = {};
 	
 	var ansHashTags = {};
 	var ansHashIndex = {};
@@ -7,36 +6,35 @@
 	var answer_header_selector = ".answer_header_text";
 	var answer_div_selector = ".row .pagedlist_item";
 	var answer_anchor_tag_selector = "a[name*='answer_']";
+	var answer_text_selector = ".answer_text";
 
 	var nAnswers = 0;	
 
 	$(document).ready(function() {
 		if(isAnswerPage()){
 			initialize();
-      dummy();
+			activate_mouseover_events();
 		}
 		return;
 	});
 
-  var getTargetUrl = function(element) {
-    var currentUrl = $(element).parents(answer_div_selector).find(answer_anchor_tag_selector).attr('name');
-    return ansHashIndex[ansHashTags[currentUrl] + 1];
-  }
+ 	var getTargetUrl = function(element) {
+    	var currentUrl = $(element).parents(answer_div_selector).find(answer_anchor_tag_selector).attr('name');
+    	return ansHashIndex[ansHashTags[currentUrl] + 1];
+	};
 
-  var dummy = function() {
-    answer_elements = $('.answer_text');
-    left_coord = answer_elements.offset().left;
+ 	var activate_mouseover_events = function() {
+    	var answer_elements = $(answer_text_selector);
+    	left_coord = answer_elements.offset().left;
 
-    answer_elements = document.getElementsByClassName('answer_text');
-    answer_elements = $('.answer_text');
-    answer_elements.bind('mouseover', function(e) {
-      top_coord = e.pageY;
-      var nextUrl = '#' + getTargetUrl(e.srcElement);
-      var skipButton = createSkipButton(left_coord - 50, top_coord, nextUrl);
-      skipButton.appendTo(answer_elements[0]);
-    });
+    	answer_elements.bind('mouseover', function(e) {
+      		top_coord = e.pageY;
+      		var nextUrl = '#' + getTargetUrl(e.srcElement);
+      		var skipButton = createSkipButton(left_coord - 50, top_coord, nextUrl);
+      		skipButton.appendTo(answer_elements[0]);
+    	});
 
-  };
+  	};
 
 	var isAnswerPage = function () {
 		return ($(answer_header_selector).length > 0);
@@ -65,16 +63,16 @@
 	
 	};
 
-  var createSkipButton = function(x_coord, y_coord, nextUrl) {
-    var skipButton = $('#skipButton');
-    if (skipButton.length == 0) {
-      skipButton = $('<div id="skipButton"><a href="#">SKIP</a></div>');
-      skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'width':'50px', 'background-color':'#003333'});
-    } else {
-      skipButton.css({'left':x_coord, 'top':y_coord});
-    }
-    skipButton.find('a').attr('href', nextUrl);
-    return skipButton;
-  };
+  	var createSkipButton = function(x_coord, y_coord, nextUrl) {
+    	var skipButton = $('#skipButton');
+    	if (skipButton.length == 0) {
+      		skipButton = $('<div id="skipButton"><a href="#">SKIP</a></div>');
+      		skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'width':'50px', 'background-color':'#003333'});
+    	} else {
+      		skipButton.css({'left':x_coord, 'top':y_coord});
+    	}
+    	skipButton.find('a').attr('href', nextUrl);
+    	return skipButton;
+  	};
 
 })(jQuery);
