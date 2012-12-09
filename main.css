@@ -17,9 +17,9 @@
 }
 
 div.pagedlist_item {
-  animation-name: nodeInserted;
-  animation-duration: 0.001s;
+  animation-name: nodeInserted !important;
+  animation-duration: 0.001s !important;
 
-  -webkit-animation-name: nodeInserted;
-  -webkit-animation-duration: 0.001s;
+  -webkit-animation-name: nodeInserted !important;
+  -webkit-animation-duration: 0.001s !important;
 }

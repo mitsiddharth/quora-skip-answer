@@ -101,16 +101,18 @@
   };
 
   var registerEvents = function() {
-    //activate_mouseover_events();
+    activate_mouseover_events();
     //registerDomInsertEvent();
   }
 
   var animationEvent = function(e) {
       if(e.originalEvent.animationName == 'nodeInserted') {
-      populateAnswerHash();
-      activate_mouseover_events();
+        populateAnswerHash();
+        activate_mouseover_events();
     }
   }
 
-  $(document).bind('webkitAnimationStart', function(e) {animationEvent(e)});
+  $(document).bind('webkitAnimationStart', function(e) {
+    animationEvent(e);
+  });
 })(jQuery);
