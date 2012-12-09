@@ -20,9 +20,6 @@
 
  	var getTargetUrl = function(element) {
     	var currentUrl = $(element).parents(answer_div_selector).find(answer_anchor_tag_selector).attr('name');
-      console.log(ansHashTags[currentUrl] + 1);
-      console.log(currentUrl);
-      console.log(ansHashIndex[ansHashTags[currentUrl] + 1]);
     	return ansHashIndex[ansHashTags[currentUrl] + 1];
 	};
 
