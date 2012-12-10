@@ -1,6 +1,6 @@
 {
 	"name": "Quora Skip Answer",
-	"version": "1.0.0",
+	"version": "0.2",
 	"manifest_version": 2,
 
 	"description" : "Adds a button that allows users to skip long answers on Quora and jump to the next answer",
@@ -17,5 +17,7 @@
 	  }
 	],
 	"permissions":[
+    "http://www.quora.com/",
+    "https://www.quora.com/"
 	]
 }

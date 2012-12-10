@@ -6,8 +6,8 @@
 	var answer_header_selector = ".answer_header_text";
 	var answer_div_selector = ".row .pagedlist_item";
 	var answer_anchor_tag_selector = "a[name*='answer_']";
-	var answer_text_selector = ".answer_text";
 	var answer_content_selector = ".answer_content";
+  var suggest_edits_selector = ".suggested_edits,edit,inline_editor_edit";
 
 	var nAnswers = 0;	
 
@@ -33,9 +33,9 @@
   };
 
  	var activate_mouseover_events = function() {
-      var answer_text = $(answer_text_selector);
+      var suggested_edits_elements = $(suggest_edits_selector);
     	var answer_elements = $(answer_content_selector);
-    	var left_coord = answer_text.offset().left;
+    	var left_coord = $(suggested_edits_elements[0]).position().left;
 
       answer_elements.unbind('mouseover');
 
