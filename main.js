@@ -18,17 +18,28 @@
 		return;
 	});
 
- 	var getTargetUrl = function(element) {
+ 	var getNextUrl = function(element) {
     	var currentUrl = $(element).parents(answer_div_selector).find(answer_anchor_tag_selector).attr('name');
     	return ansHashIndex[ansHashTags[currentUrl] + 1];
 	};
+  
+  var getPreviousUrl = function(element) {
+    var currentUrl = $(element).parents(answer_div_selector).find(answer_anchor_tag_selector).attr('name');
+    return ansHashIndex[ansHashTags[currentUrl] - 1];
+  };
 
   var mouseOverHandler = function(e, left_coord) {
     var top_coord = e.pageY;
-    var nextUrl = '#' + getTargetUrl(e.srcElement);
+    var nextUrl = '#' + getNextUrl(e.srcElement);
     if(nextUrl != '#undefined') {
       var skipButton = createSkipButton(left_coord - 50, top_coord, nextUrl);
       skipButton.appendTo(document.body);
+    }
+
+    var previousUrl = '#' + getPreviousUrl(e.srcElement);
+    if(previousUrl != '#undefined') {
+      var previousButton = createPreviousButton(left_coord - 50 - $('#skipButton').width(), top_coord, previousUrl);
+      previousButton.appendTo(document.body);
     }
   };
 
@@ -72,17 +83,33 @@
 	
 	};
 
+  var createButton = function(text, id, x_coord, y_coord) {
+    button = $('<div id="' + id + '" class="topic_list_item">' +
+        '  <a href="#" class="topic_name">'+
+        '    <span class="name_text">'+
+              text +
+        '    </span>'+
+        '  </a>'+
+        '</div>');
+    button.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'margin': '5px'});
+    return button;
+  }
+
+  var createPreviousButton = function(x_coord, y_coord, previousUrl) {
+    var previousButton = $('#previousButton');
+    if (previousButton.length == 0) {
+      previousButton = createButton('Prev', 'previousButton', x_coord, y_coord);
+    } else {
+      previousButton.css({'left':x_coord, 'top':y_coord});
+    }
+    previousButton.find('a').attr('href', previousUrl);
+    return previousButton;
+  };
+
   var createSkipButton = function(x_coord, y_coord, nextUrl) {
     var skipButton = $('#skipButton');
     if (skipButton.length == 0) {
-      skipButton = $('<div id="skipButton" class="topic_list_item">' +
-                     '  <a href="#" class="topic_name">'+
-                     '    <span class="name_text">'+
-                     '      Skip'+
-                     '    </span>'+
-                     '  </a>'+
-                     '</div>');
-      skipButton.css({'left':x_coord, 'top':y_coord, 'position':'absolute', 'margin': '5px'});
+      skipButton = createButton('Skip', 'skipButton', x_coord, y_coord);
     } else {
       skipButton.css({'left':x_coord, 'top':y_coord});
     }
